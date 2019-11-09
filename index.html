@@ -35,7 +35,7 @@
                overflow: hidden;
                font-family: "Times New Roman", Times, serif;
                 }
-/* Display text inline*/
+/* Display Header text inline*/
            header * {            
                Display: inline-block;
                margin-right: 20px;
@@ -44,6 +44,34 @@
            .right {
                float: right;
            }
+          
+/* Collapsible content style */
+/* Source: /
+           /* Style the button that is used to open and close the collapsible content */
+.collapsible {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active, .collapsible:hover {
+  background-color: #ccc;
+}
+
+/* Style the collapsible content. Note: hidden by default */
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
     </style> 
 </head>
 <body>
@@ -60,6 +88,14 @@
             id="map">
         </div>
     
+<!-- Collapsible Content -->
+    <!-- not sure if I should keep this collapsible content -->
+<!-- Source: https://www.w3schools.com/howto/howto_js_collapsible.asp -->
+        <button type="button" class="collapsible">Open Collapsible</button>
+        <div class="content">
+            <p>Lorem ipsum...</p>
+        </div>
+    
 <!-- Add the Leaflet JavaScript library -->
     <script 
         src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js">>
@@ -74,6 +110,24 @@
 	maxZoom: 17,
 	attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
 }).addTo(map);
+        
+// Collapsible Content Script
+// Source:
+        var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+        
     </script>
     
 </body>
