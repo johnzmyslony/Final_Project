@@ -51,7 +51,7 @@
 <!-- Header to be placed at top of web page -->
     <header  id="header">
         <h2>DTA Interactive Bus Route Map</h2>
-        <h3>I built this with <a href="https://leafletjs.com/" target="_blank">Leaflet</a></h3>
+        <h3>This map is built with <a href="https://leafletjs.com/" target="_blank">Leaflet</a></h3>
         <h5 class="right">John Zmyslony | Fall 2019 | GIS 4533 at UMD</h5>  
     </header>
     
@@ -69,9 +69,11 @@
 // Create variable to hold map element, give initial settings to map
         var map = L.map('map',{ center: [46.78593, -92.094699], zoom: 12});
         
-// Add OpenStreetMap tile layer to map element
-        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(map);
-        
+// Add OpenTopoMap tile layer - This basemap can be changed later on     
+    L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+	maxZoom: 17,
+	attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+}).addTo(map);
     </script>
     
 </body>
