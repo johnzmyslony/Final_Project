@@ -5,6 +5,8 @@
 	<title>DTA Interactive</title>
    <!-- External Stylesheets -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" />
+    <!-- Add leaflet sidebar plugin -->
+    <a href="https://github.com/Turbo87/leaflet-sidebar/"></a>
        <style>
            
 /* Allow Map to fill page*/
@@ -17,12 +19,12 @@
             height: 100%;
             width: 100%;
                 }
-           map {
+           #map {
                top: 60px;
                 }
            
 /*Stylize Header*/
-           header {
+           #header {
                top: 0;
                width: 100%;
                z-index: 999999;
@@ -97,6 +99,9 @@
         var marker = L.marker([51.2, 7]).addTo(map).on('click', function() {sidebar.toggle();});
         
 // Show sidebar
+
+// Add content for sidebar
+        sidebar.setContent('test <b>test</b> test');
         
     </script>
     
