@@ -83,10 +83,21 @@
         
 // Create sidebar variable - taken from https://github.com/Turbo87/leaflet-sidebar
         var sidebar = L.control.sidebar('sidebar', {
+            closeButton: true,
     position: 'left'
-});
+        });
+        map.addControl(sidebar);
+        
+// show sidebar on map open
+        setTimeout(function () {
+            sidebar.show();
+        }, 500);
 
-map.addControl(sidebar);
+// Add marker for sidebar - taken from
+        var marker = L.marker([51.2, 7]).addTo(map).on('click', function() {sidebar.toggle();});
+        
+// Show sidebar
+        
     </script>
     
 </body>
