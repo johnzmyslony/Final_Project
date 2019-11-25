@@ -6,7 +6,7 @@
    <!-- External Stylesheets -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" />
     <!-- Add leaflet sidebar plugin -->
-    <a href="https://github.com/Turbo87/leaflet-sidebar/"></a>
+   <!-- <link rel="stylesheet" href="https://turbo87.github.io/leaflet-sidebar/src/L.Control.Sidebar.css"> -->
        <style>
            
 /* Allow Map to fill page*/
@@ -95,7 +95,7 @@
             sidebar.show();
         }, 500);
 
-// Add marker for sidebar - taken from
+// Add marker for sidebar
         var marker = L.marker([51.2, 7]).addTo(map).on('click', function() {sidebar.toggle();});
         
 // Show sidebar
