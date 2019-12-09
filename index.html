@@ -5,6 +5,8 @@
 	<title>DTA Interactive</title>
    <!-- External Stylesheets -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" />
+    <!-- Add leaflet sidebar plugin -->
+    <link rel="stylesheet" href="https://turbo87.github.io/leaflet-sidebar/src/L.Control.Sidebar.css"> == $0 
        <style>
            
 /* Allow Map to fill page*/
@@ -14,15 +16,15 @@
             margin: 0;
                 }
         html, body, #map {
-            height: 100%;
+            height: 96.6%;
             width: 100%;
                 }
-           map {
+           #map {
                top: 60px;
                 }
            
 /*Stylize Header*/
-           header {
+           #header {
                top: 0;
                width: 100%;
                z-index: 999999;
@@ -60,10 +62,18 @@
             id="map">
         </div>
     
+<!-- Add div for sidebar - taken from https://github.com/Turbo87/leaflet-sidebar-->
+        <div id="sidebar">
+            <h1>leaflet-sidebar</h1>
+        </div>
+    
+    
 <!-- Add the Leaflet JavaScript library -->
     <script 
-        src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js">>
+        src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js">
     </script>
+    
+    <script src="http://turbo87.github.io/leaflet-sidebar/src/L.Control.Sidebar.js"></script>
     
     <script>
 // Create variable to hold map element, give initial settings to map
@@ -74,6 +84,27 @@
 	maxZoom: 17,
 	attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
 }).addTo(map);
+        
+// Create sidebar variable - taken from https://github.com/Turbo87/leaflet-sidebar
+        var sidebar = L.control.sidebar('sidebar', {
+            closeButton: true,
+    position: 'left'
+        });
+        map.addControl(sidebar);
+        
+// show sidebar on map open
+        setTimeout(function () {
+            sidebar.show();
+        }, 500);
+
+// Add marker for sidebar
+        var marker = L.marker([51.2, 7]).addTo(map).on('click', function() {sidebar.toggle();});
+        
+// Show sidebar
+
+// Add content for sidebar
+        sidebar.setContent('test <b>test</b> test');
+        
     </script>
     
 </body>
