@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" />
     <!-- Add leaflet sidebar plugin -->
     <link rel="stylesheet" href="https://turbo87.github.io/leaflet-sidebar/src/L.Control.Sidebar.css"> == $0 
+    <!-- Add JQuery plugin : taken from https://cdnjs.com/libraries/jquery/ -->
+   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
        <style>
            
 /* Allow Map to fill page*/
@@ -76,7 +78,7 @@
     <script src="http://turbo87.github.io/leaflet-sidebar/src/L.Control.Sidebar.js"></script>
     
 <!-- Add JQuery plugin : taken from https://cdnjs.com/libraries/jquery/-->
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/core.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/core.js"></script> -->
     
     <script>
 // Create variable to hold map element, give initial settings to map
@@ -107,6 +109,19 @@
 
 // Add content for sidebar
         sidebar.setContent('test <b>test</b> test');
+        
+//*******************************************************************************************************************************        
+//***** Begin GeoJSON Data Addition*****
+ 
+       
+// Get GeoJSON from file
+        var busRoutes = $.getJSON("route_data/map.geojson")
+// Add GeoJSON to map
+        L.geoJson(busRoutes, {
+            style : function(feature) {
+                return{}
+            }
+        }).addTo(map);
         
     </script>
     
