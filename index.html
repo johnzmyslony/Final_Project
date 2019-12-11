@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" />
     <!-- Add leaflet sidebar plugin -->
     <link rel="stylesheet" href="https://turbo87.github.io/leaflet-sidebar/src/L.Control.Sidebar.css"> == $0 
+    <!-- Add JQuery plugin : taken from https://cdnjs.com/libraries/jquery/ -->
+   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
        <style>
            
 /* Allow Map to fill page*/
@@ -75,6 +77,9 @@
     
     <script src="http://turbo87.github.io/leaflet-sidebar/src/L.Control.Sidebar.js"></script>
     
+<!-- Add JQuery plugin : taken from https://cdnjs.com/libraries/jquery/-->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/core.js"></script> -->
+    
     <script>
 // Create variable to hold map element, give initial settings to map
         var map = L.map('map',{ center: [46.78593, -92.094699], zoom: 12});
@@ -104,6 +109,48 @@
 
 // Add content for sidebar
         sidebar.setContent('test <b>test</b> test');
+        
+//*******************************************************************************************************************************        
+//***** Begin GeoJSON Data Addition*****
+ 
+       
+//// Get GeoJSON from file
+//        var busRoutes = $.getJSON("route_data/routes.geojson");
+//// Add GeoJSON to map
+//        L.geoJson(busRoutes.responseJSON, {
+////            style : function(feature) {
+////                return{}
+////            }
+//        }).addTo(map);
+        
+// Example
+// Creating a layer for a single route using filter
+        
+        // create route3 variable that will be used for the route3 layer
+        var route3;
+        // create route7 variable that will be used for the route7 layer
+        var route7;
+        
+        $.getJSON("route_data/routes.geojson", function(data) {
+            // filter data for each route
+            
+            // route 3 example
+           route3 = L.geoJson(data, {
+                // call filter function on each geojson feature
+               filter: function(feature, layer) {
+//                   console.log('test feature', feature);
+//                    // test the feature and if it evaluates to true it will belong to this layer
+//                    // criteria: geometry = line, and name = 3
+//                if (feature.geometry.type == "GeometryCollection" && feature.properties.Field_1 == "3")
+                  if (feature.properties.Field_1 == "3") {
+                        console.log('satisfied condition for route 3', feature);
+                        return true;
+                    }
+                }
+            }).addTo(map);
+            
+            // filter another route and add to map?
+        });
         
     </script>
     
