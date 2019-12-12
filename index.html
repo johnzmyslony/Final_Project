@@ -48,6 +48,11 @@
            .right {
                float: right;
            }
+           
+/*           styling to get sidebar close button to show up*/
+           .leaflet-sidebar .close {
+               z-index: 99999
+           }
     </style> 
 </head>
 <body>
@@ -55,7 +60,7 @@
 <!-- Header to be placed at top of web page -->
     <header  id="header">
         <h2>DTA Interactive Bus Route Map</h2>
-        <h3>Want to know more? Visit the  <a href="https://www.duluthtransit.com/" target="_blank">DTA here!</a></h3>
+        <h3>Want to know more? Visit the <a href="https://www.duluthtransit.com/" target="_blank">DTA</a>Website</h3>
         <h5 class="right">John Zmyslony | Fall 2019 | GIS 4533 at UMD</h5>  
     </header>
     
@@ -103,12 +108,13 @@
         }, 500);
 
 // Add marker for sidebar
-        var marker = L.marker([46.762478, -92.128117]).addTo(map).on('click', function() {sidebar.toggle();});
+//        var marker = L.marker([46.762478, -92.128117]).addTo(map).on('click', function() {sidebar.toggle();});
         
 // Show sidebar
 
 // Add content for sidebar
-        sidebar.setContent('<h3>Click on the DTA Station to close this sidebar</h3><h4>Or, click on a route to see a schedule</h4>');
+        sidebar.setContent('<h3>Click on the DTA Station to close this sidebar</h3><h4>Or, click on a route to see a schedule</h4>' +
+        '<p id="routeImageContainer"><img src=""></p>');
         
 //*******************************************************************************************************************************        
 //***** Begin GeoJSON Data Addition*****
@@ -129,22 +135,29 @@
             // filter data for each route
             
     // route 3 example
-           route3 = L.geoJson(data, {
+           route3 = L.geoJson(data,{ 
+               style: {
+                   color: "green"
+               },
+                                    
                 // call filter function on each geojson feature
                filter: function(feature, layer) {
                   if (feature.properties.Field_1 == "3") {
-                        console.log('satisfied condition for route 3', feature);
+//                        console.log('satisfied condition for route 3', feature);
                         return true;
                     }
                 },
-            }).addTo(map);
+            })
+            // click listener for layer
+               .on('click', layerClickHandler)
+               .addTo(map);
             
     // *** filter route 6
            route6 = L.geoJson(data, {
                 // call filter function on each geojson feature
                filter: function(feature, layer) {
                   if (feature.properties.Field_1 == "6") {
-                        console.log('satisfied condition for route 6', feature);
+//                        console.log('satisfied condition for route 6', feature);
                         return true;
                     }
                 }
@@ -155,31 +168,54 @@
                 // call filter function on each geojson feature
                filter: function(feature, layer) {
                   if (feature.properties.Field_1 == "7") {
-                        console.log('satisfied condition for route 7', feature);
+//                        console.log('satisfied condition for route 7', feature);
                         return true;
                     }
                 }
             }).addTo(map);
             
      // *** filter route 21
-           route6 = L.geoJson(data, {
+           route21 = L.geoJson(data, {
                 // call filter function on each geojson feature
                filter: function(feature, layer) {
                   if (feature.properties.Field_1 == "21") {
-                        console.log('satisfied condition for route 21', feature);
+//                        console.log('satisfied condition for route 21', feature);
                         return true;
                     }
                 }
             }).addTo(map);
-        });
-        
 //************************************************************************************************
 //************* Begin layer control
         
-       var allRoutes = {"3 New Duluth, Proctor": route3, "6 East Mainline, UMD": route6, "7 East Mainline, Lakeside": route7, "21 Morgan Park": route21}; 
+       var allRoutes = {"3 New Duluth Proctor": route3, "6 East Mainline UMD": route6, "7 East Mainline Lakeside": route7, "21 Morgan Park": route21}; 
+//        console.log("allRoutes", allRoutes);
+        L.control.layers(null, allRoutes).addTo(map);
+     //     L.control.layers(null, route3).addTo(map); 
+        });  // where jQuery load geojson function ends
         
-   //     L.control.layers(null, allRoutes).addTo(map);
-          L.control.layers(null, route3).addTo(map);
+        // layer click handler
+        // show bus times for route on sidebar
+        function layerClickHandler(event) {
+
+            // get the ID for the route
+            var routeID = event.target.getLayers()[0].feature.properties.Field_1;
+            
+            // **TODO: figure out which picture to show based on the routeID
+            var lookupTableForRouteImages = {
+                "3" : "route_schedule_pdfs/routes_6_7_fromDT_weekday.jpg",
+                // create this for each image
+            }
+            
+            // show the route info on the sidebar
+            
+            // 1. show the sidebar
+            sidebar.show();
+            
+            // 2. show the route info image for the clicked route
+            $("#routeImageContainer img").attr("src", lookupTableForRouteImages[routeID]);
+            
+        }
+        
     </script>
     
 </body>
