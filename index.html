@@ -23,6 +23,7 @@
                 }
            #map {
                top: 60px;
+               bottom: 10px;
                 }
            
 /*Stylize Header*/
@@ -113,8 +114,8 @@
 // Show sidebar
 
 // Add content for sidebar
-        sidebar.setContent('<h3>Click on the DTA Station to close this sidebar</h3><h4>Or, click on a route to see a schedule</h4>' +
-        '<p id="routeImageContainer"><img src=""></p>');
+        sidebar.setContent('<h2>Select a layer to view a bus route</h2><h3>Then you can click on a route to see a schedule</h3>' +
+        '<p>Weekday</p><p id="routeImageContainerFromDT"><img src=""><p id="routeImageContainerToDT"><img src=""><p>Saturday</p><p id="routeImageContainerFromDTSat"><img src=""><p id="routeImageContainerToDTSat"><img src=""><p>Sunday</p><p id="routeImageContainerFromDTSun"><img src=""><p id="routeImageContainerToDTSun"><img src=""></p>');
         
 //*******************************************************************************************************************************        
 //***** Begin GeoJSON Data Addition*****
@@ -137,7 +138,8 @@
     // route 3 example
            route3 = L.geoJson(data,{ 
                style: {
-                   color: "green"
+                   color: "green",
+                   weight: "6"
                },
                                     
                 // call filter function on each geojson feature
@@ -149,11 +151,16 @@
                 },
             })
             // click listener for layer
-               .on('click', layerClickHandler)
-               .addTo(map);
+               .on('click', layerClickHandler);
+        //       .addTo(map);
             
     // *** filter route 6
            route6 = L.geoJson(data, {
+                style: {
+                    color: "purple",
+                    weight: "6"
+               },
+                  
                 // call filter function on each geojson feature
                filter: function(feature, layer) {
                   if (feature.properties.Field_1 == "6") {
@@ -161,10 +168,18 @@
                         return true;
                     }
                 }
-            }).addTo(map);
+            })
+            // click listener for layer
+               .on('click', layerClickHandler);
+       //        .addTo(map);
             
     // *** filter route 7
            route7 = L.geoJson(data, {
+                style: {
+                   color: "darkblue",
+                   weight: "6"
+               },
+                   
                 // call filter function on each geojson feature
                filter: function(feature, layer) {
                   if (feature.properties.Field_1 == "7") {
@@ -172,10 +187,18 @@
                         return true;
                     }
                 }
-            }).addTo(map);
-            
+            })
+            // click listener for layer
+               .on('click', layerClickHandler);
+       //        .addTo(map);
+
      // *** filter route 21
            route21 = L.geoJson(data, {
+                style: {
+                   color: "yellow",
+                   weight: "6"
+               },
+                   
                 // call filter function on each geojson feature
                filter: function(feature, layer) {
                   if (feature.properties.Field_1 == "21") {
@@ -183,7 +206,11 @@
                         return true;
                     }
                 }
-            }).addTo(map);
+            })
+            // click listener for layer
+               .on('click', layerClickHandler);
+         //      .addTo(map);
+
 //************************************************************************************************
 //************* Begin layer control
         
@@ -201,10 +228,46 @@
             var routeID = event.target.getLayers()[0].feature.properties.Field_1;
             
             // **TODO: figure out which picture to show based on the routeID
-            var lookupTableForRouteImages = {
-                "3" : "route_schedule_pdfs/routes_6_7_fromDT_weekday.jpg",
+            var lookupTableImagesFromDT = {
+                "3" : "route_schedule_pdfs/route_3_toDT_saturday.jpg",
+                "6" : "route_schedule_pdfs/routes_6_7_fromDT_weekday.jpg",
+                "7" : "route_schedule_pdfs/routes_6_7_fromDT_weekday.jpg",
+                "21" : "route_schedule_pdfs/bus21.jpg"
                 // create this for each image
             }
+            
+            var lookupTableImagesToDT = {
+               // "3" : "route_schedule_pdfs/routes_6_7_fromDT_weekday.jpg",
+               // "6" : "route_schedule_pdfs/routes_6_7_fromDT_weekday.jpg",
+                "7" : "route_schedule_pdfs/routes_6_7_toDT_weekday.jpg",
+               // "21" : "route_schedule_pdfs/routes_6_7_fromDT_weekday.jpg"
+            }
+                
+            var lookupTableImagesFromDTSat = {
+               // "3" : "route_schedule_pdfs/routes_6_7_fromDT_weekday.jpg",
+               // "6" : "route_schedule_pdfs/routes_6_7_fromDT_weekday.jpg",
+                "7" : "route_schedule_pdfs/routes_6_7_fromDT_saturday.jpg",
+               // "21" : "route_schedule_pdfs/routes_6_7_fromDT_weekday.jpg"
+            }
+            var lookupTableImagesToDTSat = {
+               // "3" : "route_schedule_pdfs/routes_6_7_fromDT_weekday.jpg",
+               // "6" : "route_schedule_pdfs/routes_6_7_fromDT_weekday.jpg",
+                "7" : "route_schedule_pdfs/routes_6_7_toDT_saturday.jpg",
+               // "21" : "route_schedule_pdfs/routes_6_7_fromDT_weekday.jpg"
+            }   
+            
+            var lookupTableImagesFromDTSun = {
+               // "3" : "route_schedule_pdfs/routes_6_7_fromDT_weekday.jpg",
+               // "6" : "route_schedule_pdfs/routes_6_7_fromDT_weekday.jpg",
+                "7" : "route_schedule_pdfs/route_7_fromDT_sunday.jpg",
+               // "21" : "route_schedule_pdfs/routes_6_7_fromDT_weekday.jpg"
+            }
+            var lookupTableImagesToDTSun = {
+               // "3" : "route_schedule_pdfs/routes_6_7_fromDT_weekday.jpg",
+               // "6" : "route_schedule_pdfs/routes_6_7_fromDT_weekday.jpg",
+                "7" : "route_schedule_pdfs/route_7_toDT_sunday.jpg",
+               // "21" : "route_schedule_pdfs/routes_6_7_fromDT_weekday.jpg"
+            } 
             
             // show the route info on the sidebar
             
@@ -212,8 +275,17 @@
             sidebar.show();
             
             // 2. show the route info image for the clicked route
-            $("#routeImageContainer img").attr("src", lookupTableForRouteImages[routeID]);
+            $("#routeImageContainerFromDT img").attr("src", lookupTableImagesFromDT[routeID]);
             
+            $("#routeImageContainerToDT img").attr("src", lookupTableImagesToDT[routeID]);
+            
+            $("#routeImageContainerFromDTSat img").attr("src", lookupTableImagesFromDTSat[routeID]);
+            
+            $("#routeImageContainerToDTSat img").attr("src", lookupTableImagesToDTSat[routeID]);
+            
+            $("#routeImageContainerFromDTSun img").attr("src", lookupTableImagesFromDTSun[routeID]);
+            
+            $("#routeImageContainerToDTSun img").attr("src", lookupTableImagesToDTSun[routeID]);
         }
         
     </script>
