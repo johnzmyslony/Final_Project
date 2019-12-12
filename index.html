@@ -32,8 +32,8 @@
                z-index: 999999;
                 position: fixed;
                 height: 60px;
-               background-color: maroon;
-               color: gold;
+               background-color: darkblue;
+               color: snow;
                Padding-left: 12px;
                font-size: 15px;
                overflow: hidden;
@@ -55,7 +55,7 @@
 <!-- Header to be placed at top of web page -->
     <header  id="header">
         <h2>DTA Interactive Bus Route Map</h2>
-        <h3>This map is built with <a href="https://leafletjs.com/" target="_blank">Leaflet</a></h3>
+        <h3>Want to know more? Visit the  <a href="https://www.duluthtransit.com/" target="_blank">DTA here!</a></h3>
         <h5 class="right">John Zmyslony | Fall 2019 | GIS 4533 at UMD</h5>  
     </header>
     
@@ -103,12 +103,12 @@
         }, 500);
 
 // Add marker for sidebar
-        var marker = L.marker([51.2, 7]).addTo(map).on('click', function() {sidebar.toggle();});
+        var marker = L.marker([46.762478, -92.128117]).addTo(map).on('click', function() {sidebar.toggle();});
         
 // Show sidebar
 
 // Add content for sidebar
-        sidebar.setContent('test <b>test</b> test');
+        sidebar.setContent('<h3>Click on the DTA Station to close this sidebar</h3><h4>Or, click on a route to see a schedule</h4>');
         
 //*******************************************************************************************************************************        
 //***** Begin GeoJSON Data Addition*****
@@ -118,11 +118,11 @@
         
         // create route3 variable that will be used for the route3 layer
         var route3;
-        // create route7 variable that will be used for the route7 layer
+        // create route6 variable that will be used for the route6 layer
         var route6;
-        // create route3 variable that will be used for the route3 layer
-        var route7;
         // create route7 variable that will be used for the route7 layer
+        var route7;
+        // create route21 variable that will be used for the route21 layer
         var route21;
         
         $.getJSON("route_data/routes.geojson", function(data) {
@@ -136,7 +136,7 @@
                         console.log('satisfied condition for route 3', feature);
                         return true;
                     }
-                }
+                },
             }).addTo(map);
             
     // *** filter route 6
@@ -173,15 +173,13 @@
             }).addTo(map);
         });
         
-//************************************************************************************************88
+//************************************************************************************************
 //************* Begin layer control
         
-       var allRoutes = { "3 New Duluth - Proctor": route3, "6 East Mainline - UMD": route6, "7 East Mainline - Lakeside": route7, "21 Morgan Park": route21}; 
+       var allRoutes = {"3 New Duluth, Proctor": route3, "6 East Mainline, UMD": route6, "7 East Mainline, Lakeside": route7, "21 Morgan Park": route21}; 
         
-        L.control.layers().addTo(map);
-        
-        
-        
+        L.control.layers(null, allRoutes).addTo(map);
+
     </script>
     
 </body>
