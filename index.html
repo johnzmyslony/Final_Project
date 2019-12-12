@@ -115,7 +115,7 @@
 
 // Add content for sidebar
         sidebar.setContent('<h2>Select a layer to view a bus route</h2><h3>Then you can click on a route to see a schedule</h3>' +
-        '<p>Weekday</p><p id="routeImageContainerFromDT"><img src=""><p id="routeImageContainerToDT"><img src=""><p>Saturday</p><p id="routeImageContainerFromDTSat"><img src=""><p id="routeImageContainerToDTSat"><img src=""><p>Sunday</p><p id="routeImageContainerFromDTSun"><img src=""><p id="routeImageContainerToDTSun"><img src=""></p>');
+        '<p>Weekday</p><p id="routeImageContainerFromDT"><img src=""><p id="routeImageContainerToDT"><img src=""><p>Saturday</p><p id="routeImageContainerFromDTSat"><img src=""><p id="routeImageContainerToDTSat"><img src=""><p>Sunday</p><p id="routeImageContainerFromDTSun"><img src=""><p id="routeImageContainerToDTSun"><img src=""><p>Holiday</p><p id="routeImageContainerFromDTHol"><img src=""><p id="routeImageContainerToDTHol"><img src=""></p>');
         
 //*******************************************************************************************************************************        
 //***** Begin GeoJSON Data Addition*****
@@ -269,6 +269,19 @@
                // "21" : "route_schedule_pdfs/routes_6_7_fromDT_weekday.jpg"
             } 
             
+            var lookupTableImagesFromDTHol = {
+               // "3" : "route_schedule_pdfs/routes_6_7_fromDT_weekday.jpg",
+               // "6" : "route_schedule_pdfs/routes_6_7_fromDT_weekday.jpg",
+                "7" : "route_schedule_pdfs/route_7_fromDT_holiday.jpg",
+               // "21" : "route_schedule_pdfs/routes_6_7_fromDT_weekday.jpg"
+            }
+            var lookupTableImagesToDTHol = {
+               // "3" : "route_schedule_pdfs/routes_6_7_fromDT_weekday.jpg",
+               // "6" : "route_schedule_pdfs/routes_6_7_fromDT_weekday.jpg",
+                "7" : "route_schedule_pdfs/route_7_toDT_holiday.jpg",
+               // "21" : "route_schedule_pdfs/routes_6_7_fromDT_weekday.jpg"
+            } 
+            
             // show the route info on the sidebar
             
             // 1. show the sidebar
@@ -286,6 +299,10 @@
             $("#routeImageContainerFromDTSun img").attr("src", lookupTableImagesFromDTSun[routeID]);
             
             $("#routeImageContainerToDTSun img").attr("src", lookupTableImagesToDTSun[routeID]);
+            
+            $("#routeImageContainerFromDTHol img").attr("src", lookupTableImagesFromDTHol[routeID]);
+            
+            $("#routeImageContainerToDTHol img").attr("src", lookupTableImagesToDTHol[routeID]);
         }
         
     </script>
